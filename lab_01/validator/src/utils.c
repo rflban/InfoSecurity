@@ -7,8 +7,6 @@
 #include <ifaddrs.h>
 #include <netpacket/packet.h>
 
-#define MIN(a,b) (((a)<(b))?(a):(b))
-
 int is_virtual_if(struct ifaddrs *ifa)
 {
     if (!ifa)
