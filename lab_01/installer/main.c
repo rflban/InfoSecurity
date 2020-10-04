@@ -43,7 +43,9 @@ int install()
     key_file = fopen(KEY_FILENAME, "w");
 
     for (int idx = 0; idx < maddrs->alen; ++idx)
-        fprintf(key_file, "%x", maddrs->addr[idx]);
+        fprintf(key_file, "%x%c",
+                maddrs->addr[idx],
+                (idx == maddrs->alen - 1 ? '\n' : ':'));
 
     fclose(key_file);
     free_mac_addrs(maddrs);
