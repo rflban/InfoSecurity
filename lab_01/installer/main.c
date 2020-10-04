@@ -6,14 +6,19 @@
 
 int main(void)
 {
-    struct ifaddrs *ifaddr = NULL;
+    struct mac_addrs *maddrs;
 
-    getifaddrs(&ifaddr);
+    maddrs = get_mac_addrs();
 
-    printf("%d\n", is_virtual_if(ifaddr));
-    printf("%d\n", is_virtual_if(ifaddr->ifa_next));
+    for (struct mac_addrs *ma = maddrs; ma; ma = ma->next)
+    {
+        printf("%s: ", ma->ifa_name);
+        
+        for (int idx = 0; idx < ma->alen; ++idx)
+            printf("%x%c", ma->addr[idx], (idx >= ma->alen-1 ? '\n' : ':'));
+    }
 
-    freeifaddrs(ifaddr);
+    free_mac_addrs(maddrs);
 
     return 0;
 }
